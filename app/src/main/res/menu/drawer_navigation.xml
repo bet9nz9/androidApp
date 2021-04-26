@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--Add here all menu options-->
+    <item
+        android:id="@+id/contact"
+        android:icon="@mipmap/ic_launcher"
+        android:title="Contact" />
+    <item
+        android:id="@+id/help"
+        android:icon="@mipmap/ic_launcher"
+        android:title="Help" />
+    <item
+        android:id="@+id/settings"
+        android:icon="@mipmap/ic_launcher"
+        android:title="Settings" />
+</menu>
