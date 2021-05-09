@@ -1,5 +1,6 @@
 package com.example.kursach;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -12,7 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainScreenActivity extends AppCompatActivity {
-//TODO: Такой же код прийдется вставлять в каждой активити
+    //TODO: Такой же код прийдется вставлять в каждой активити
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
 
@@ -27,7 +28,7 @@ public class MainScreenActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -35,19 +36,29 @@ public class MainScreenActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 //TODO: Set menu items here
                 switch (item.getItemId()) {
-                    case R.id.contact:
-//                        startActivity(new Intent(MainScreenActivity.this, Contact.class));
+                    case R.id.personalCabinet:
+                        changeActivity(PersonalCabinetActivity.class);
                         break;
-                    case R.id.help:
-//                        startActivity(new Intent(MainScreenActivity.this, Contact.class));
+                    case R.id.addVacancy:
+                        changeActivity(AddVacancyActivity.class);
                         break;
-                    case R.id.settings:
-//                        startActivity(new Intent(MainScreenActivity.this, Contact.class));
+                    case R.id.myVacancies:
+                        changeActivity(UserVacancies.class);
+                        break;
+                    case R.id.assignedVacancies:
+                        changeActivity(AssignedVacancies.class);
+                        break;
+                    case R.id.allVacancies:
+                        changeActivity(MainScreenActivity.class);
                         break;
                 }
 
                 return false;
             }
         });
+    }
+
+    private void changeActivity(Class clazz) {
+        startActivity(new Intent(MainScreenActivity.this, clazz));
     }
 }

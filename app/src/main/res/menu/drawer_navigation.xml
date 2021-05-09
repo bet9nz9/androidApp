@@ -3,15 +3,23 @@
 
     <!--Add here all menu options-->
     <item
-        android:id="@+id/contact"
-        android:icon="@mipmap/ic_launcher"
-        android:title="Contact" />
+        android:id="@+id/personalCabinet"
+        android:icon="@drawable/ic_baseline_personal_cabinet"
+        android:title="@string/menu_personalCabinet" />
     <item
-        android:id="@+id/help"
-        android:icon="@mipmap/ic_launcher"
-        android:title="Help" />
+        android:id="@+id/addVacancy"
+        android:icon="@drawable/ic_baseline_add_circle_24"
+        android:title="@string/menu_addVacancy" />
     <item
-        android:id="@+id/settings"
-        android:icon="@mipmap/ic_launcher"
-        android:title="Settings" />
+        android:id="@+id/assignedVacancies"
+        android:icon="@drawable/ic_baseline_asigned_vacancies"
+        android:title="@string/assigned_vacancies" />
+    <item
+        android:id="@+id/myVacancies"
+        android:icon="@drawable/ic_baseline_my_vacancies"
+        android:title="@string/my_vacancies" />
+    <item
+        android:id="@+id/allVacancies"
+        android:icon="@drawable/all_vacancies"
+        android:title="@string/all_vacancies" />
 </menu>

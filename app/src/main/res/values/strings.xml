@@ -11,10 +11,19 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_personalCabinet">Personal cabinet</string>
+    <string name="menu_addVacancy">Add vacancy</string>
+    <string name="menu_filter">Filter</string>
+    <string name="my_vacancies">My vacancies</string>
+    <string name="assigned_vacancies">Assigned vacancies</string>
+    <string name="all_vacancies">All vacancies</string>
 
     <string name="login">Login:</string>
     <string name="pass">Password:</string>
+    <string name="newPass">New password:</string>
+    <string name="changePassText">Change password</string>
     <string name="confPass">Confirm password:</string>
+    <string name="submit">Submit</string>
     <string name="usernameText">Username:</string>
     <string name="username">USERNAME</string>
     <string name="acceptBtn">Accept</string>

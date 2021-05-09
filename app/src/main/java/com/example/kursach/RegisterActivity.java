@@ -7,6 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.kursach.SQLHelper.UserSqlHelper;
+import com.example.kursach.exception.ValidationException;
+import com.example.kursach.model.UserDataModel;
+import com.example.kursach.validator.UserValidator;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -14,7 +20,6 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText passField;
     private EditText confPassField;
     private EditText usernameField;
-    private Button registryBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +30,31 @@ public class RegisterActivity extends AppCompatActivity {
         passField = findViewById(R.id.passField);
         confPassField = findViewById(R.id.confirmPassField);
         usernameField = findViewById(R.id.usernameField);
-        registryBtn = findViewById(R.id.registryBtn);
+        Button registryBtn = findViewById(R.id.registryBtn);
 
         registryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                try {
+
+                    if (!passField.getText().toString().equals(confPassField.getText().toString())) {
+                        throw new ValidationException("Password is not confirmed!");
+                    }
+
+                    UserSqlHelper sqlHelper = new UserSqlHelper(RegisterActivity.this);
+                    sqlHelper.createUser(RegisterActivity.this,
+                            new UserDataModel(
+                                    loginField.getText().toString(),
+                                    passField.getText().toString(),
+                                    usernameField.getText().toString()
+                            )
+                    );
+
+                } catch (ValidationException exception) {
+                    Toast.makeText(RegisterActivity.this, exception.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                }
+
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
