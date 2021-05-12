@@ -22,6 +22,15 @@ public class VacancyDataModel {
         this.employeeId = employeeId;
     }
 
+    public VacancyDataModel(BigDecimal coast, String shortDesc, String fullDesc, Boolean isSelected, Long executorId, Long employeeId) {
+        this.coast = coast;
+        this.shortDesc = shortDesc;
+        this.fullDesc = fullDesc;
+        this.isSelected = isSelected;
+        this.executorId = executorId;
+        this.employeeId = employeeId;
+    }
+
     public VacancyDataModel() {
     }
 

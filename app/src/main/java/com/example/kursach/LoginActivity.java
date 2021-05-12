@@ -2,7 +2,9 @@ package com.example.kursach;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +19,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passField;
     private Button registryBtn;
     private Button loginBtn;
+
+    private final SharedPreferences sharedPreferences = this.getSharedPreferences("user", Context.MODE_PRIVATE);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,11 @@ public class LoginActivity extends AppCompatActivity {
                     if (!userDataModel.getPassword().equals(passField.getText().toString())){
                         Toast.makeText(LoginActivity.this, "Wrong login or password!", Toast.LENGTH_LONG).show();
                     } else {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("userId", userDataModel.getId().toString());
+                        editor.putString("userLogin", userDataModel.getLogin());
+                        editor.putString("username", userDataModel.getUsername());
+                        editor.apply();
                         startActivity(new Intent(LoginActivity.this, MainScreenActivity.class));
                     }
                 }
