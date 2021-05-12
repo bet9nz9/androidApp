@@ -9,11 +9,14 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.example.kursach.exception.Messages;
 import com.example.kursach.model.VacancyDataModel;
 import com.example.kursach.model.VacancyFields;
 import com.example.kursach.validator.VacancyValidator;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class VacancySqlHelper extends SQLiteOpenHelper {
@@ -102,5 +105,69 @@ public class VacancySqlHelper extends SQLiteOpenHelper {
         database.close();
 
         return vacancy;
+    }
+
+    public List<VacancyDataModel> getAllVacancies(Context context){
+        List<VacancyDataModel> resultList = new ArrayList<>();
+
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery(String.format(Queries.SELECT_ALL, VACANCY_TABLE), null);
+        if (cursor.moveToFirst()){
+            do{
+                VacancyDataModel vacancy = new VacancyDataModel();
+                vacancy.setId(cursor.getLong(0));
+                vacancy.setCoast(new BigDecimal(cursor.getString(1)));
+                vacancy.setShortDesc(cursor.getString(2));
+                vacancy.setFullDesc(cursor.getString(3));
+
+                if (cursor.getInt(4) == 1) {
+                    vacancy.setSelected(true);
+                } else {
+                    vacancy.setSelected(false);
+                }
+                vacancy.setExecutorId(cursor.getLong(5));
+                vacancy.setEmployeeId(cursor.getLong(6));
+                resultList.add(vacancy);
+            }while (cursor.moveToNext());
+        }else {
+            Toast.makeText(context, Messages.NOTHING_FOUND, Toast.LENGTH_LONG).show();
+        }
+
+        cursor.close();
+        database.close();
+
+        return resultList;
+    }
+
+    public List<VacancyDataModel> getAllVacanciesByParameter(String parameter, String fieldName , Context context){
+        List<VacancyDataModel> resultList = new ArrayList<>();
+
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery(String.format(Queries.SELECT_ALL_WHERE, VACANCY_TABLE, fieldName, parameter), null);
+        if (cursor.moveToFirst()){
+            do{
+                VacancyDataModel vacancy = new VacancyDataModel();
+                vacancy.setId(cursor.getLong(0));
+                vacancy.setCoast(new BigDecimal(cursor.getString(1)));
+                vacancy.setShortDesc(cursor.getString(2));
+                vacancy.setFullDesc(cursor.getString(3));
+
+                if (cursor.getInt(4) == 1) {
+                    vacancy.setSelected(true);
+                } else {
+                    vacancy.setSelected(false);
+                }
+                vacancy.setExecutorId(cursor.getLong(5));
+                vacancy.setEmployeeId(cursor.getLong(6));
+                resultList.add(vacancy);
+            }while (cursor.moveToNext());
+        }else {
+            Toast.makeText(context, Messages.NOTHING_FOUND, Toast.LENGTH_LONG).show();
+        }
+
+        cursor.close();
+        database.close();
+
+        return resultList;
     }
 }

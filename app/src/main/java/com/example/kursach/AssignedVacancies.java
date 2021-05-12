@@ -6,10 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 
+import com.example.kursach.SQLHelper.VacancySqlHelper;
+import com.example.kursach.model.VacancyDataModel;
+import com.example.kursach.model.VacancyFields;
 import com.google.android.material.navigation.NavigationView;
 
 public class AssignedVacancies extends AppCompatActivity {
@@ -17,13 +24,14 @@ public class AssignedVacancies extends AppCompatActivity {
     private RecyclerView recyclerView;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
+    private final SharedPreferences sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assigned_vacancies);
 
-        recyclerView = findViewById(R.id.userVacancies);
+        recyclerView = findViewById(R.id.assignedVacancies);
 
         drawerLayout = findViewById(R.id.drawerMain);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
@@ -33,6 +41,11 @@ public class AssignedVacancies extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
+        VacancySqlHelper sqlHelper = new VacancySqlHelper(AssignedVacancies.this);
+        ItemsAdapter itemsAdapter = new ItemsAdapter(AssignedVacancies.this,
+                sqlHelper.getAllVacanciesByParameter(sharedPreferences.getString("userId", ""), VacancyFields.EXECUTOR_ID_FIELD, AssignedVacancies.this));
+        recyclerView.setAdapter(itemsAdapter);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

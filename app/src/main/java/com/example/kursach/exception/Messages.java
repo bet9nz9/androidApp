@@ -14,6 +14,8 @@ public interface Messages {
     String NOT_VALID_FIELD = "Field %s is not valid.";
     String USER_IS_CREATED = "User has been successfully created!";
 
+    String NOTHING_FOUND = "No results were found for your search!";
+
     String COAST_LESS_THAN_ZERO = "Coast cannot be less thant zero!";
     String COAST_MORE_THAN_5000 = "Coast cannot be more than 5000!";
     String COAST_EQUALS_ZERO = "Coast cannot be equal zero!";
