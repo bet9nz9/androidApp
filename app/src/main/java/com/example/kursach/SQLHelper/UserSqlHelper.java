@@ -107,9 +107,9 @@ public class UserSqlHelper extends SQLiteOpenHelper {
 
             long insert = database.update(USER_TABLE, cv, "ID=?", new String[]{newUserParameters.getId().toString()});
             if (insert == -1) {
-                Toast.makeText(context, "Error while creating user!", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Error while updating user!", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(context, "User has been successfully created!", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "User has been successfully updated!", Toast.LENGTH_LONG).show();
             }
         }else {
             throw new ValidationException(Messages.USER_IS_NOT_EXISTS);

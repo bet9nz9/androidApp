@@ -10,8 +10,12 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.example.kursach.exception.Messages;
+import com.example.kursach.exception.ValidationException;
+import com.example.kursach.model.UserDataModel;
+import com.example.kursach.model.UserFields;
 import com.example.kursach.model.VacancyDataModel;
 import com.example.kursach.model.VacancyFields;
+import com.example.kursach.validator.UserValidator;
 import com.example.kursach.validator.VacancyValidator;
 
 import java.math.BigDecimal;
@@ -169,5 +173,19 @@ public class VacancySqlHelper extends SQLiteOpenHelper {
         database.close();
 
         return resultList;
+    }
+
+    public void updateVacancy(Context context, VacancyDataModel vacancyDataModel){
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(VacancyFields.EXECUTOR_ID_FIELD, vacancyDataModel.getExecutorId());
+
+        long insert = database.update(VACANCY_TABLE, cv, "ID=?", new String[]{vacancyDataModel.getId().toString()});
+        if (insert == -1) {
+            Toast.makeText(context, "Error while updating vacancy!", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(context, "Vacancy is successfully assigned!", Toast.LENGTH_LONG).show();
+        }
     }
 }

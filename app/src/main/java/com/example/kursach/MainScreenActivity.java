@@ -37,12 +37,10 @@ public class MainScreenActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
-
         VacancySqlHelper sqlHelper = new VacancySqlHelper(MainScreenActivity.this);
         ItemsAdapter itemsAdapter = new ItemsAdapter(MainScreenActivity.this,
                 sqlHelper.getAllVacancies(MainScreenActivity.this));
         recyclerView.setAdapter(itemsAdapter);
-        
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

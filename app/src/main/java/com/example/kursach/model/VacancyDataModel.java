@@ -1,8 +1,9 @@
 package com.example.kursach.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class VacancyDataModel {
+public class VacancyDataModel implements Serializable {
 
     private Long id;
     private BigDecimal coast;
