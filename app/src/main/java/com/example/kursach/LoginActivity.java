@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.kursach.SQLHelper.UserSqlHelper;
+import com.example.kursach.exception.Messages;
 import com.example.kursach.model.UserDataModel;
 
 public class LoginActivity extends AppCompatActivity {
@@ -20,12 +21,13 @@ public class LoginActivity extends AppCompatActivity {
     private Button registryBtn;
     private Button loginBtn;
 
-    private final SharedPreferences sharedPreferences = this.getSharedPreferences("user", Context.MODE_PRIVATE);
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        sharedPreferences = this.getSharedPreferences("user", Context.MODE_PRIVATE);
 
         loginField = findViewById(R.id.loginField);
         passField = findViewById(R.id.passField);
@@ -47,10 +49,10 @@ public class LoginActivity extends AppCompatActivity {
 
                 UserDataModel userDataModel = userSqlHelper.getUserByParameter(loginField.getText().toString(), "LOGIN");
                 if (userDataModel == null) {
-                    Toast.makeText(LoginActivity.this, "User not found!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, Messages.USER_NOT_FOUND, Toast.LENGTH_LONG).show();
                 } else {
-                    if (!userDataModel.getPassword().equals(passField.getText().toString())){
-                        Toast.makeText(LoginActivity.this, "Wrong login or password!", Toast.LENGTH_LONG).show();
+                    if (!userDataModel.getPassword().equals(passField.getText().toString())) {
+                        Toast.makeText(LoginActivity.this, Messages.WRONG_LOGIN_OR_PASS, Toast.LENGTH_LONG).show();
                     } else {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("userId", userDataModel.getId().toString());

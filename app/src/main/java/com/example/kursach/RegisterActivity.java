@@ -37,25 +37,25 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 try {
-
                     if (!passField.getText().toString().equals(confPassField.getText().toString())) {
                         throw new ValidationException("Password is not confirmed!");
                     }
 
                     UserSqlHelper sqlHelper = new UserSqlHelper(RegisterActivity.this);
-                    sqlHelper.createUser(RegisterActivity.this,
+                    if (sqlHelper.createUser(RegisterActivity.this,
                             new UserDataModel(
                                     loginField.getText().toString(),
                                     passField.getText().toString(),
                                     usernameField.getText().toString()
-                            )
-                    );
+                            ))) {
+                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                    }
 
                 } catch (ValidationException exception) {
                     Toast.makeText(RegisterActivity.this, exception.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                 }
 
-                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+
             }
         });
     }

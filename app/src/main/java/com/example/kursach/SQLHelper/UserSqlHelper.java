@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -17,36 +16,18 @@ import com.example.kursach.validator.UserValidator;
 
 import java.util.UUID;
 
-public class UserSqlHelper extends SQLiteOpenHelper {
+public class UserSqlHelper extends SQLHelper {
 
     private static final String USER_TABLE = "USER_TABLE";
 
     public UserSqlHelper(@Nullable Context context) {
-        super(context, "database.db", null, 1);
+        super(context);
     }
 
-    @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE USER_TABLE (" +
-                "    ID INTEGER NOT NULL," +
-                "    LOGIN VARCHAR(150) NOT NULL," +
-                "    PASS VARCHAR(150) NOT NULL," +
-                "    USERNAME VARCHAR(150) NOT NULL," +
-                "    USER_VACANCIES INTEGER," +
-                "    ASSIGNED_VACANCIES INTEGER," +
-                "    PRIMARY KEY (ID)" +
-                ")");
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
-    }
-
-    public void createUser(Context context, UserDataModel user){
+    public boolean createUser(Context context, UserDataModel user) {
         UserValidator.isValidUserToCreate(user);
 
-        if (isUserNotExists(user)){
+        if (isUserNotExists(user)) {
             user.setId(UUID.randomUUID().getMostSignificantBits());
             SQLiteDatabase database = this.getWritableDatabase();
             ContentValues cv = new ContentValues();
@@ -60,16 +41,19 @@ public class UserSqlHelper extends SQLiteOpenHelper {
 
             long insert = database.insert(USER_TABLE, null, cv);
             if (insert == -1) {
-                Toast.makeText(context, "Error while creating user!", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, Messages.ERROR_CREATE_USER, Toast.LENGTH_LONG).show();
+                return false;
             } else {
-                Toast.makeText(context, "User has been successfully created!", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, Messages.USER_IS_CREATED, Toast.LENGTH_LONG).show();
+                return true;
             }
-        }else{
-            Toast.makeText(context, "User is already exists!", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(context, Messages.USER_IS_ALREADY_EXISTS, Toast.LENGTH_LONG).show();
+            return false;
         }
     }
 
-    public UserDataModel getUserByParameter(String parameter, String fieldName){
+    public UserDataModel getUserByParameter(String parameter, String fieldName) {
         String query = String.format(Queries.SELECT_ONE, USER_TABLE, fieldName, parameter);
 
         UserDataModel user = null;
@@ -78,7 +62,7 @@ public class UserSqlHelper extends SQLiteOpenHelper {
 
         Cursor cursor = database.rawQuery(query, null);
 
-        if (cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             user = new UserDataModel();
             do {
                 user.setId(cursor.getLong(0));
@@ -96,27 +80,29 @@ public class UserSqlHelper extends SQLiteOpenHelper {
         return user;
     }
 
-    public void updateUser(Context context, UserDataModel newUserParameters){
+    public void updateUser(Context context, UserDataModel newUserParameters) {
         UserValidator.isValidUserToCreate(newUserParameters);
 
-        if (!isUserNotExists(newUserParameters)){
+        if (!isUserNotExists(newUserParameters)) {
             SQLiteDatabase database = this.getWritableDatabase();
             ContentValues cv = new ContentValues();
 
             cv.put(UserFields.PASSWORD_FIELD, newUserParameters.getPassword());
+            cv.put(UserFields.ASSIGNED_VACANCIES, newUserParameters.getAssignedVacancies());
+            cv.put(UserFields.USER_VACANCIES, newUserParameters.getUserVacancies());
 
             long insert = database.update(USER_TABLE, cv, "ID=?", new String[]{newUserParameters.getId().toString()});
             if (insert == -1) {
-                Toast.makeText(context, "Error while updating user!", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, Messages.ERROR_UPDATE_USER, Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(context, "User has been successfully updated!", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, Messages.USER_IS_UPDATED, Toast.LENGTH_LONG).show();
             }
-        }else {
+        } else {
             throw new ValidationException(Messages.USER_IS_NOT_EXISTS);
         }
     }
 
-    private boolean isUserNotExists(UserDataModel user){
+    private boolean isUserNotExists(UserDataModel user) {
 
         return getUserByParameter(user.getUsername(), UserFields.USERNAME_FIELD) == null && getUserByParameter(user.getLogin(), UserFields.LOGIN_FIELD) == null;
     }

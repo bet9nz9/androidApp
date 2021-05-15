@@ -27,6 +27,7 @@
     <string name="usernameText">Username:</string>
     <string name="username">USERNAME</string>
     <string name="acceptBtn">Accept</string>
+    <string name="acceptNewPass">Accept new password</string>
     <string name="backBtn">Back</string>
     <string name="registryBtn">Registry</string>
     <string name="loginBtn">Login</string>

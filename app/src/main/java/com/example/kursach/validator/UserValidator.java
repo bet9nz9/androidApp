@@ -1,5 +1,6 @@
 package com.example.kursach.validator;
 
+import com.example.kursach.exception.Messages;
 import com.example.kursach.exception.ValidationException;
 import com.example.kursach.model.UserDataModel;
 
@@ -20,7 +21,7 @@ public class UserValidator {
     private static void isValidField(String field, String fieldName) {
 
         if (!checkLength(field, fieldName)) {
-            throw new ValidationException(String.format("Min length of %s 6 symbols.", fieldName));
+            throw new ValidationException(String.format(Messages.MIN_LENGTH_SIX_SYMBOLS, fieldName));
         }
 
         isContainSpecialSymbols(field, fieldName);
@@ -29,9 +30,9 @@ public class UserValidator {
 
     private static boolean checkLength(String value, String fieldName) {
         if (value == null || value.equals("")) {
-            throw new ValidationException(String.format("Field %s cannot be empty!", fieldName));
+            throw new ValidationException(String.format(Messages.FIElD_IS_EMPTY, fieldName));
         } else {
-            return value.length() > 6;
+            return value.length() >= 6;
         }
     }
 
@@ -41,10 +42,10 @@ public class UserValidator {
         if (matcher.find()) {
             String foundedValue = value.substring(matcher.start(), matcher.end());
             if (foundedValue.length() != value.length()) {
-                throw new ValidationException(String.format("Field %s contains unresolved symbols.", filedName));
+                throw new ValidationException(String.format(Messages.CONTAINS_UNRESOLVED_SYMBOLS, filedName));
             }
         } else {
-            throw new ValidationException(String.format("Field %s is not valid.", filedName));
+            throw new ValidationException(String.format(Messages.NOT_VALID_FIELD, filedName));
         }
     }
 

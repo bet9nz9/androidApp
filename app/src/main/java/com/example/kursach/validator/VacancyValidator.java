@@ -19,10 +19,10 @@ public class VacancyValidator {
         return true;
     }
 
-    public static void validateCoast(String coast) throws ValidationException{
-        try{
+    public static void validateCoast(String coast) throws ValidationException {
+        try {
             BigDecimal price = new BigDecimal(coast);
-        } catch (RuntimeException exception){
+        } catch (RuntimeException exception) {
             throw new ValidationException(Messages.COAST_IS_NOT_NUMERIC);
         }
     }
@@ -37,7 +37,7 @@ public class VacancyValidator {
         if (price.compareTo(BigDecimal.ZERO) < 0) {
             throw new ValidationException(Messages.COAST_LESS_THAN_ZERO);
         }
-        if (price.compareTo(BigDecimal.valueOf(5000)) < 0) {
+        if (price.compareTo(BigDecimal.valueOf(5000)) > 0) {
             throw new ValidationException(Messages.COAST_MORE_THAN_5000);
         }
     }

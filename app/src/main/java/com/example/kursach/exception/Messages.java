@@ -13,16 +13,20 @@ public interface Messages {
     String CONTAINS_UNRESOLVED_SYMBOLS = "Field %s contains unresolved symbols.";
     String NOT_VALID_FIELD = "Field %s is not valid.";
     String USER_IS_CREATED = "User has been successfully created!";
+    String USER_IS_UPDATED = "User has been successfully updated!";
+    String ERROR_UPDATE_USER = "Error while updating user!";
 
-    String NOTHING_FOUND = "No results were found for your search!";
+    String NOTHING_FOUND = "Vacancies not found!";
 
-    String COAST_LESS_THAN_ZERO = "Coast cannot be less thant zero!";
-    String COAST_MORE_THAN_5000 = "Coast cannot be more than 5000!";
-    String COAST_EQUALS_ZERO = "Coast cannot be equal zero!";
+    String COAST_LESS_THAN_ZERO = "Price cannot be less thant zero!";
+    String COAST_MORE_THAN_5000 = "Price cannot be more than 5000!";
+    String COAST_EQUALS_ZERO = "Price cannot be equal zero!";
     String YOU_ARE_NOT_LOGGINED = "You are not loggined!";
     String COAST_IS_NOT_NUMERIC = "Field price is not numeric!";
     String VACANCY_IS_CREATED = "Vacancy has been successfully created!";
+    String VACANCY_IS_UPDATED = "Vacancy has been successfully updated!";
     String ERROR_CREATE_VACANCY = "Error while creating vacancy!";
+    String ERROR_UPDATE_VACANCY = "Error while updating vacancy!";
 
 
 }

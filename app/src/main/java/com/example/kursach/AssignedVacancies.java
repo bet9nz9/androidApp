@@ -24,12 +24,14 @@ public class AssignedVacancies extends AppCompatActivity {
     private RecyclerView recyclerView;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
-    private final SharedPreferences sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assigned_vacancies);
+
+        sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
 
         recyclerView = findViewById(R.id.assignedVacancies);
 
